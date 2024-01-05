@@ -8,6 +8,12 @@ const weatherimage = document.querySelector(".weathericon");
 button.addEventListener("click", function () {
   checkweather(city.value);
 });
+city.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    checkweather(city.value);
+  }
+});
 
 async function checkweather(city) {
   const response = await fetch(apiurl + city + apikey);
@@ -23,7 +29,7 @@ async function checkweather(city) {
     document.querySelector(".city").innerHTML = data.name;
     document.querySelector(".temp").innerHTML =
       Math.round(data.main.temp) + "°C";
-    document.querySelector(".humidity").innerHTML = data.main.humidity;
+    document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
     document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
 
     if (data.weather[0].main === "Mist") {
